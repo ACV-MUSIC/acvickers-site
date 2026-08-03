@@ -1,0 +1,483 @@
+/* ============================================
+   Andrew Vickers — acvickers.com
+   Palette: score ink, manuscript paper, verdigris
+   ============================================ */
+
+:root {
+  --ink:        #141A2B;   /* ground — deep score-ink indigo */
+  --ink-panel:  #1B2236;   /* raised panels */
+  --paper:      #EDE8DC;   /* warm manuscript paper — primary text */
+  --paper-dim:  #97A0B8;   /* secondary text */
+  --verdigris:  #7FB6A5;   /* accent — aged brass patina */
+  --rule:       #2A3350;   /* hairlines, staff lines */
+
+  --display: "Cormorant Garamond", Georgia, serif;
+  --body:    "Karla", system-ui, sans-serif;
+
+  --measure: 62ch;
+  --gutter: clamp(1.5rem, 5vw, 5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation: none !important; transition: none !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--body);
+  font-size: 1.0625rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: var(--verdigris); text-decoration: none; }
+a:hover { text-decoration: underline; text-underline-offset: 4px; }
+a:focus-visible,
+button:focus-visible { outline: 2px solid var(--verdigris); outline-offset: 3px; }
+
+/* ---------- Type scale ---------- */
+
+h1, h2, h3 { font-family: var(--display); font-weight: 500; line-height: 1.1; margin: 0; }
+
+.display-xl {
+  font-size: clamp(3rem, 9vw, 6.5rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 400;
+}
+
+.display-lg { font-size: clamp(2.25rem, 5vw, 3.5rem); letter-spacing: 0.02em; }
+.display-md { font-size: clamp(1.75rem, 3.4vw, 2.5rem); letter-spacing: 0.01em; }
+
+/* utility label — small caps, tracked out, like score markings */
+.label {
+  font-family: var(--body);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--verdigris);
+  margin: 0;
+}
+
+.label-dim { color: var(--paper-dim); }
+
+/* tempo marking — italic, like Italian directions in a score */
+.tempo {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--paper-dim);
+  letter-spacing: 0.01em;
+}
+
+.lede { font-size: 1.2rem; color: var(--paper); max-width: var(--measure); }
+.dim  { color: var(--paper-dim); }
+
+/* ---------- Layout ---------- */
+
+.wrap {
+  width: 100%;
+  max-width: 1180px;
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+.section { padding-block: clamp(3.5rem, 9vw, 7rem); }
+
+/* five-line staff used as a section divider */
+.staff {
+  height: 22px;
+  border-top: 1px solid var(--rule);
+  border-bottom: 1px solid var(--rule);
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0, transparent 4px,
+    var(--rule) 4px, var(--rule) 5px,
+    transparent 5px, transparent 10px,
+    var(--rule) 10px, var(--rule) 11px,
+    transparent 11px, transparent 16px,
+    var(--rule) 16px, var(--rule) 17px,
+    transparent 17px
+  );
+  opacity: 0.75;
+}
+
+/* ---------- Rehearsal mark ---------- */
+
+.mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid var(--verdigris);
+  color: var(--verdigris);
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  flex: none;
+}
+
+.section-head {
+  display: flex;
+  align-items: center;
+  gap: 1.1rem;
+  margin-bottom: 2.25rem;
+}
+
+/* ---------- Header / nav ---------- */
+
+.site-header {
+  border-bottom: 1px solid var(--rule);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(20, 26, 43, 0.94);
+  backdrop-filter: blur(8px);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding-block: 1rem;
+  flex-wrap: wrap;
+}
+
+.wordmark {
+  font-family: var(--display);
+  font-size: 1.15rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.wordmark:hover { text-decoration: none; color: var(--verdigris); }
+
+.nav-links {
+  display: flex;
+  gap: clamp(0.9rem, 2.2vw, 1.9rem);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  flex-wrap: wrap;
+}
+
+.nav-links a {
+  color: var(--paper-dim);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.nav-links a:hover { color: var(--paper); text-decoration: none; }
+.nav-links a[aria-current="page"] { color: var(--verdigris); }
+
+/* ---------- Hero ---------- */
+
+.hero { padding-block: clamp(3rem, 8vw, 6rem); }
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(2rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.hero-credential {
+  margin: 1.75rem 0 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--rule);
+  font-size: 0.95rem;
+  color: var(--paper-dim);
+  max-width: 34ch;
+}
+.hero-credential strong { color: var(--paper); font-weight: 600; }
+
+.hero-photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  filter: saturate(0.92);
+}
+
+/* ---------- Buttons ---------- */
+
+.btn {
+  display: inline-block;
+  margin-top: 2rem;
+  padding: 0.85rem 1.6rem;
+  border: 1px solid var(--verdigris);
+  color: var(--verdigris);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+.btn:hover {
+  background: var(--verdigris);
+  color: var(--ink);
+  text-decoration: none;
+}
+.btn-sm { margin-top: 0; padding: 0.6rem 1.1rem; font-size: 0.7rem; }
+
+/* ---------- Pull quote ---------- */
+
+.quote-block { max-width: 46rem; margin-inline: auto; text-align: center; }
+
+.quote {
+  font-family: var(--display);
+  font-size: clamp(1.4rem, 2.9vw, 2.15rem);
+  line-height: 1.42;
+  font-style: italic;
+  color: var(--paper);
+  margin: 0;
+}
+
+.attrib {
+  margin-top: 1.75rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+
+/* ---------- Featured work ---------- */
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+}
+
+.video-frame {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  background: var(--ink-panel);
+  border: 1px solid var(--rule);
+}
+.video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+
+.spec {
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin: 0.9rem 0 1.5rem;
+}
+
+/* ---------- Works list ---------- */
+
+.works-list { list-style: none; margin: 0; padding: 0; }
+
+.work {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 1rem 2rem;
+  align-items: start;
+  padding-block: 1.9rem;
+  border-top: 1px solid var(--rule);
+}
+.work:last-child { border-bottom: 1px solid var(--rule); }
+
+.work-title {
+  font-family: var(--display);
+  font-size: clamp(1.5rem, 2.6vw, 2rem);
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+}
+.work-title a { color: var(--paper); }
+.work-title a:hover { color: var(--verdigris); text-decoration: none; }
+
+.work-spec {
+  font-size: 0.78rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin: 0 0 0.75rem;
+}
+
+.work-note { margin: 0; max-width: 54ch; color: var(--paper); }
+
+.work-actions { display: flex; flex-direction: column; gap: 0.6rem; align-items: flex-start; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verdigris);
+  border: 1px solid var(--rule);
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 0.65rem;
+}
+
+audio { width: 100%; max-width: 22rem; margin-top: 0.9rem; }
+
+/* ---------- Two-column prose ---------- */
+
+.split {
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: start;
+}
+
+.portrait { aspect-ratio: 4/5; object-fit: cover; }
+
+.prose p { max-width: var(--measure); }
+.prose p + p { margin-top: 1.25rem; }
+
+/* ---------- Credit grid (commercial) ---------- */
+
+.credits { list-style: none; margin: 0; padding: 0; }
+
+.credit {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.5rem 2rem;
+  align-items: baseline;
+  padding-block: 1.15rem;
+  border-top: 1px solid var(--rule);
+}
+.credit:last-child { border-bottom: 1px solid var(--rule); }
+
+.credit-client {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  margin: 0;
+}
+.credit-project { color: var(--paper-dim); font-size: 0.95rem; }
+.credit-role {
+  font-size: 0.72rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--verdigris);
+  white-space: nowrap;
+}
+
+.client-line {
+  margin-top: 2.5rem;
+  font-size: 0.8rem;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  line-height: 2;
+}
+
+/* ---------- Contact ---------- */
+
+.contact-email {
+  font-family: var(--display);
+  font-size: clamp(1.6rem, 4vw, 2.6rem);
+  letter-spacing: 0.01em;
+  display: inline-block;
+  margin-top: 0.75rem;
+}
+
+.socials { display: flex; gap: 1.5rem; margin-top: 2rem; list-style: none; padding: 0; }
+.socials a {
+  font-size: 0.75rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.socials a:hover { color: var(--verdigris); text-decoration: none; }
+
+/* ---------- Footer ---------- */
+
+.site-footer {
+  border-top: 1px solid var(--rule);
+  padding-block: 2.5rem;
+  margin-top: 2rem;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  align-items: center;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+}
+.footer-inner a { color: var(--paper-dim); }
+.footer-inner a:hover { color: var(--verdigris); text-decoration: none; }
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 860px) {
+  .hero-grid,
+  .feature-grid,
+  .split { grid-template-columns: 1fr; }
+
+  .hero-photo { aspect-ratio: 3 / 2; }
+  .portrait { aspect-ratio: 3/2; }
+
+  .work,
+  .credit { grid-template-columns: 1fr; }
+
+  .work-actions { flex-direction: row; flex-wrap: wrap; align-items: center; }
+
+  .nav-inner { justify-content: flex-start; }
+}
+
+/* ---------- Engraved title plate ---------- */
+
+.title-plate {
+  border: 1px solid var(--rule);
+  background: var(--ink-panel);
+  padding: clamp(2rem, 5vw, 3.5rem) 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.1rem;
+  aspect-ratio: 4 / 3;
+}
+
+.title-plate .plate-title {
+  font-family: var(--display);
+  font-size: clamp(1.9rem, 4.2vw, 3rem);
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  line-height: 1.15;
+  margin: 0;
+}
+
+.title-plate .plate-sub {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--paper-dim);
+  margin: 0;
+}
+
+.title-plate .plate-rule {
+  width: 3.5rem;
+  height: 1px;
+  background: var(--verdigris);
+  margin: 0.35rem auto;
+}
+
+.title-plate .plate-composer {
+  font-size: 0.74rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--paper-dim);
+  margin: 0;
+}
